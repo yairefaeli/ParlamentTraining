@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { CoreModule } from 'src/core/core.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { LoginScreenModule } from './features/login-screen/login-screen.module';
 import { EffectsModule } from '@ngrx/effects';
 
