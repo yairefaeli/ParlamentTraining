@@ -21,7 +21,7 @@ export const coreReducer = (
             return { ...state, playerName: (action as ExecuteLogin).playerName };
         }
         case loginScreenActionsTypes.LOGIN_SUCCESS: {
-            return { ...state, playerName: (action as LoginSuccess).token };
+            return { ...state, loginToken: (action as LoginSuccess).token };
         }
 
 

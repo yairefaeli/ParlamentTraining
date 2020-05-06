@@ -22,7 +22,7 @@ export class LoginScreenEffects {
         }),
         map((result) => {
             console.log(`recieved token: ${result.data.login}`);
-            return new LoginSuccess('log-in-token')
+            return new LoginSuccess('token-token')
         })
     )
 
