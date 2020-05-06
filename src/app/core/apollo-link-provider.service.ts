@@ -8,6 +8,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ApolloLinkProviderService {
   public apolloLink: ApolloLink;
+  
   constructor() {
     this.initApolloLink();
   }
