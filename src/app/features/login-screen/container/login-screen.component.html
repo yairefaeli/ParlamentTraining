@@ -4,14 +4,14 @@
   </mat-card-header>
   <mat-card-content>
     <form class="example-form">
-  <mat-form-field class="form-field">
-    <mat-label>player name</mat-label>
-    <input matInput >
-  </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>player name</mat-label>
+        <input matInput (keyup)="onKey($event)">
+      </mat-form-field>
 
-</form>
+    </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" class="form-field">Login</button>
+    <button mat-raised-button color="primary" class="form-field" (click)="executeLogin()">Login</button>
   </mat-card-actions>
 </mat-card>

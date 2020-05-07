@@ -13,10 +13,14 @@ export class LoginScreenComponent implements OnInit {
   constructor(public store: Store<any>) { }
 
   ngOnInit() {
+  
   }
 
   executeLogin() {
     this.store.dispatch(new ExecuteLogin(this.playerName))
   }
 
+  onKey(event: any) {
+    this.playerName = event.target.value;
+  }
 }

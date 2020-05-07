@@ -9,21 +9,24 @@ import { FetchResult } from "apollo-link";
 import { of } from 'rxjs';
 import { hot, cold } from 'jasmine-marbles';
 import { ExecuteLogin, LoginSuccess } from "../login-screen.actions";
-import { query } from "@angular/core/src/render3";
 import { login } from "src/app/graphql/mutations/login.gql";
+import { RouterTestingModule } from "@angular/router/testing";
+import { Router } from "@angular/router";
 
 
 describe('login-screen effects', () => {
     let actions$: TestHotObservable;
     let apolloLinkProvider: ApolloLinkProviderService;
     let loginScreenEffects: LoginScreenEffects;
+    let router: Router;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
                 StoreModule.forRoot({}),
                 EffectsModule.forRoot([]),
-                EffectsModule.forFeature([LoginScreenEffects])
+                EffectsModule.forFeature([LoginScreenEffects]),
+                RouterTestingModule.withRoutes([{ path: '', redirectTo: '', pathMatch: 'full' }])
             ],
             providers: [
                 LoginScreenEffects,
@@ -42,6 +45,9 @@ describe('login-screen effects', () => {
     beforeEach(() => {
         apolloLinkProvider = TestBed.get(ApolloLinkProviderService);
         loginScreenEffects = TestBed.get(LoginScreenEffects)
+
+        router = TestBed.get(Router)
+        router.initialNavigation();
     });
 
     it('should be created', inject(
@@ -74,9 +80,15 @@ describe('login-screen effects', () => {
             expect(apolloLinkProvider.execute$).toHaveBeenCalledWith({
                 query: login,
                 variables: {
-                    playerName:'DanishGod'
+                    playerName: 'DanishGod'
                 }
             })
         })
+        /*
+                it('should call navigate to direct to /lobby', () => {
+                    const expectedPath = router;
+                    expect(loginScreenEffects.loginSuccess$).toBeObservable(expectedPath)
+                })
+        */
     })
 })

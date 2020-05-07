@@ -13,6 +13,6 @@ export class ExecuteLogin implements Action {
 
 export class LoginSuccess implements Action {
     type = loginScreenActionsTypes.LOGIN_SUCCESS;
-
-    constructor(public token: string){}
+    
+    constructor(public token: string){    }
 }

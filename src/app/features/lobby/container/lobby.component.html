@@ -1,0 +1,59 @@
+<mat-grid-list cols="2">
+
+  <mat-grid-tile>
+    <mat-card class="logged-user-card">
+      <mat-card-header>
+        <mat-card-title>{{playerName$ | async}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h5>status</h5>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" class="form-field">Toggle Ready</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-card>
+
+      <mat-card-header>
+        <mat-card-title>Players</mat-card-title>
+      </mat-card-header>
+
+      <mat-card class="player-card">
+        <mat-card-header>
+          <mat-card-title>
+            <h4>Player 1</h4>
+          </mat-card-title>
+          <mat-card-title>
+            <h5>status</h5>
+          </mat-card-title>
+        </mat-card-header>
+      </mat-card>
+
+      <mat-card class="player-card">
+        <mat-card-header>
+          <mat-card-title>
+            <h4>Player 2</h4>
+          </mat-card-title>
+          <mat-card-title>
+            <h5>status</h5>
+          </mat-card-title>
+        </mat-card-header>
+      </mat-card>
+
+      <mat-card class="player-card">
+        <mat-card-header>
+          <mat-card-title>
+            <h4>Player 3</h4>
+          </mat-card-title>
+          <mat-card-title>
+            <h5>status</h5>
+          </mat-card-title>
+        </mat-card-header>
+      </mat-card>
+
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

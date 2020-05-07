@@ -20,7 +20,7 @@ export class ApolloLinkProviderService {
 
   private getHttpLink() {
     const httpOpts: any = {
-      uri: `http://localhost:3000/graphql`
+      uri: `http://localhost:4201/graphql`
     };
     return createHttpLink(httpOpts)
   }
@@ -28,11 +28,11 @@ export class ApolloLinkProviderService {
   execute$(operation: GraphQLRequest): Observable<FetchResult> {
     const subject = new Subject();
     const linkObservable = execute(this.apolloLink, operation);
-
+    
     linkObservable.subscribe(res =>
       subject.next(res)
     )
-
+    
     return subject as Observable<FetchResult>;
   }
 }
