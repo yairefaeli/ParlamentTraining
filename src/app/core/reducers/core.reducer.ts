@@ -25,10 +25,8 @@ export const coreReducer = (
         case loginScreenActionsTypes.LOGIN_SUCCESS: {
             return { ...state, loginToken: (action as LoginSuccess).token };
         }
-
-
-            return state;
     };
+    return state;
 }
 
 export const getCoreState = createFeatureSelector<CoreState>(

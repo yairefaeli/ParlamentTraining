@@ -9,6 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { StoreModule } from '@ngrx/store';
+import { lobbyStateToken, LobbyReducer } from './reducer/lobby.reducer';
 
 const routes: Routes = [
   {
@@ -28,8 +30,9 @@ const routes: Routes = [
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    MatGridListModule
-    
+    MatGridListModule,
+    StoreModule.forFeature(lobbyStateToken, LobbyReducer),
+
   ],
   exports: [
     LobbyComponent

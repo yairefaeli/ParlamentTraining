@@ -4,6 +4,9 @@ export const login = gql`
     mutation login($playerName: String!) {
        login(input: {
            playerName: $playerName
-       })
+       }){ 
+           token,
+           errors
+         }
     }
 `;

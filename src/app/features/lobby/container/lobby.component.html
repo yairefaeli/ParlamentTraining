@@ -20,8 +20,8 @@
       <mat-card-header>
         <mat-card-title>Players</mat-card-title>
       </mat-card-header>
-
-      <mat-card class="player-card">
+      {{lobbyPlayers$ | async}}
+      <mat-card class="player-card" >
         <mat-card-header>
           <mat-card-title>
             <h4>Player 1</h4>

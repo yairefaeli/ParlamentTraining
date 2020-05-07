@@ -13,7 +13,6 @@ export class LoginScreenEffects {
     @Effect()
     executeLogin$: Observable<Action> = this.actions$.pipe(
         ofType<ExecuteLogin>(loginScreenActionsTypes.EXECUTE_LOGIN),
-        /*
         switchMap(action => {
             console.log(action.playerName);
             return this.apolloLinkProvider.execute$({
@@ -25,10 +24,7 @@ export class LoginScreenEffects {
         }),
         map((result) => {
             console.log(`recieved token: ${result.data.login}`);
-            return new LoginSuccess('token-token')
-        })*/
-        map((action) => {
-            return new LoginSuccess('token-token');
+            return new LoginSuccess(result.data.login)
         })
     )
 
@@ -36,11 +32,7 @@ export class LoginScreenEffects {
     loginSuccess$: Observable<Action> = this.actions$.pipe(
         ofType<LoginSuccess>(loginScreenActionsTypes.LOGIN_SUCCESS),
         tap(() => {
-            this.router.navigate(['/lobby'])
-        }),
-        map((result) => {
-            console.log(`recieved token: ${result.token}`);
-            return new LoginSuccess('token-token')
+            this.router.navigate(['/lobby']);
         })
     );
 
