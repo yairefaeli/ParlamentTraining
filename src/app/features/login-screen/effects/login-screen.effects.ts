@@ -14,7 +14,7 @@ export class LoginScreenEffects {
     executeLogin$: Observable<Action> = this.actions$.pipe(
         ofType<ExecuteLogin>(loginScreenActionsTypes.EXECUTE_LOGIN),
         switchMap(action => {
-            console.log(action.playerName);
+            console.log(`player name: ${action.playerName}`);
             return this.apolloLinkProvider.execute$({
                 query: login,
                 variables: {

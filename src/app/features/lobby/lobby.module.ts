@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { StoreModule } from '@ngrx/store';
 import { lobbyStateToken, LobbyReducer } from './reducer/lobby.reducer';
+import { LobbyEffects } from './effects/lobby.effects';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     RouterModule.forChild(routes),
-    EffectsModule.forFeature([]),
+    EffectsModule.forFeature([LobbyEffects]),
     MatCardModule,
     MatInputModule,
     MatButtonModule,

@@ -6,13 +6,11 @@ export const coreStateToken = 'core';
 export interface CoreState {
     playerName: string;
     loginToken: string;
-    LobbyPlayers: any[];
 }
 
 export const coreInitialState: CoreState = {
     playerName: undefined,
     loginToken: undefined,
-    LobbyPlayers: undefined
 };
 
 export const coreReducer = (
@@ -36,9 +34,4 @@ export const getCoreState = createFeatureSelector<CoreState>(
 export const getPlayerName = createSelector(
     getCoreState,
     (state: CoreState) => state.playerName
-)
-
-export const getLobbyPlayers = createSelector(
-    getCoreState,
-    (state: CoreState) => state.LobbyPlayers
 )

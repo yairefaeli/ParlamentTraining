@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CoreState, getPlayerName, getLobbyPlayers } from 'src/app/core/reducers/core.reducer';
-import { FetchLobbyPlayers } from '../lobby.actions';
+import { CoreState, getPlayerName } from 'src/app/core/reducers/core.reducer';
+import { getLobbyPlayers, getPlayerStatus } from '../reducer/lobby.reducer';
+import { Player } from '@angular/core/src/render3/interfaces/player';
+import { Observable, forkJoin, combineLatest } from 'rxjs';
+import { async } from '@angular/core/testing';
+import { UpdatePlayerStatus } from '../lobby.actions';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-lobby',
@@ -10,11 +15,33 @@ import { FetchLobbyPlayers } from '../lobby.actions';
 })
 export class LobbyComponent implements OnInit {
   playerName$ = this.store.select(getPlayerName);
-  lobbyPlayers$ = this.store.select(getLobbyPlayers);
-  
-  constructor(public store: Store<CoreState>) { }
+  playerStatus$ = this.store.select(getPlayerStatus);
+  lobyPlayers$ = this.store.select(getLobbyPlayers);
+
+  constructor(public store: Store<CoreState>) {
+
+  }
 
   ngOnInit() {
+
+  }
+
+  executeReady() {
+    // this.playerName$.subscribe((nameValue) => {
+    //   this.playerStatus$.subscribe((statusValue) => {
+    //     this.store.dispatch(new UpdatePlayerStatus({ status: statusValue, name: nameValue }))
+    //   });
+    combineLatest(
+      this.playerName$,
+      this.playerStatus$
+    ).pipe(
+      map(([nameValue, statusValue]) => {
+        return { status: statusValue, name: nameValue }
+      })
+    ).subscribe(({status: statusValue, name: nameValue}) =>
+      this.store.dispatch(new UpdatePlayerStatus({ status: statusValue, name: nameValue }))
+    )
+    //});
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ExecuteLogin } from '../login-screen.actions';
+import { FetchLobbyPlayers } from '../../lobby/lobby.actions';
 
 @Component({
   selector: 'app-login-screen',
@@ -18,6 +19,7 @@ export class LoginScreenComponent implements OnInit {
 
   executeLogin() {
     this.store.dispatch(new ExecuteLogin(this.playerName))
+    this.store.dispatch(new FetchLobbyPlayers());
   }
 
   onKey(event: any) {

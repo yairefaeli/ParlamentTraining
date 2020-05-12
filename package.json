@@ -27,11 +27,13 @@
     "@ngrx/store": "^9.1.0",
     "apollo-link": "^1.2.14",
     "apollo-link-http": "^1.5.17",
+    "apollo-link-ws": "^1.0.20",
     "core-js": "^2.5.4",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.3.3",
+    "subscriptions-transport-ws": "^0.9.16",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

@@ -1,19 +1,17 @@
 import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
-import { ExecuteLogin, loginScreenActionsTypes, LoginSuccess } from "src/app/features/login-screen/login-screen.actions";
-import { lobbyActionsTypes, FetchLobbyPlayersSuccess, FetchLobbyPlayers } from '../lobby.actions';
+import { lobbyActionsTypes, FetchLobbyPlayersSuccess, UpdatePlayerStatusSuccess } from '../lobby.actions';
+import { Player } from '@angular/core/src/render3/interfaces/player';
 
 export const lobbyStateToken = 'lobby';
 
 export interface CoreState {
-    playerName: string;
-    fetchedToken: string;
-    LobbyPlayers: any[];
+    LobbyPlayers: Player[];
+    playerStatus: string
 }
 
 export const coreInitialState: CoreState = {
-    playerName: undefined,
-    fetchedToken: undefined,
-    LobbyPlayers: undefined
+    LobbyPlayers: undefined,
+    playerStatus: "PENDING"
 };
 
 export const LobbyReducer = (
@@ -26,6 +24,14 @@ export const LobbyReducer = (
         case lobbyActionsTypes.FETCH_LOBBY_PLAYERS_SUCCESS: {
             return { ...state, LobbyPlayers: (action as FetchLobbyPlayersSuccess).players };
         }
+        case lobbyActionsTypes.UPDATE_PLAYER_STATUS: {
+            return state;
+        }
+        case lobbyActionsTypes.UPDATE_PLAYER_STATUS_SUCCESS: {
+            console.log((action as UpdatePlayerStatusSuccess).status)
+            return { ...state, playerStatus: (action as UpdatePlayerStatusSuccess).status };
+        
+        }
     };
     return state;
 }
@@ -37,4 +43,10 @@ export const getLobbyState = createFeatureSelector<CoreState>(
 export const getLobbyPlayers = createSelector(
     getLobbyState,
     (state: CoreState) => state.LobbyPlayers
+)
+
+
+export const getPlayerStatus = createSelector(
+    getLobbyState,
+    (state: CoreState) => state.playerStatus
 )
