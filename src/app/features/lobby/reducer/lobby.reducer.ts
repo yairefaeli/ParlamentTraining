@@ -1,11 +1,10 @@
 import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
-import { lobbyActionsTypes, FetchLobbyPlayersSuccess, UpdatePlayerStatusSuccess } from '../lobby.actions';
-import { Player } from '@angular/core/src/render3/interfaces/player';
+import { lobbyActionsTypes, FetchLobbyPlayersSuccess, UpdatePlayerStatusSuccess, SubscribeToPlayerUpdates, PlayerUpdated } from '../lobby.actions';
 
 export const lobbyStateToken = 'lobby';
 
 export interface CoreState {
-    LobbyPlayers: Player[];
+    LobbyPlayers: any[];
     playerStatus: string
 }
 
@@ -28,9 +27,26 @@ export const LobbyReducer = (
             return state;
         }
         case lobbyActionsTypes.UPDATE_PLAYER_STATUS_SUCCESS: {
-            console.log((action as UpdatePlayerStatusSuccess).status)
             return { ...state, playerStatus: (action as UpdatePlayerStatusSuccess).status };
-        
+
+        }
+        case lobbyActionsTypes.PLAYER_UPDATED: {
+            const playerName = (action as PlayerUpdated).playerName
+            const playerStatus = (action as PlayerUpdated).status
+
+            if (state.LobbyPlayers.some(player => player.name === playerName)) {
+                let newLobbyPlayers: any[] = []
+                state.LobbyPlayers.forEach((player) => {
+                    if (player.name === playerName) {
+                        newLobbyPlayers.push({ name: playerName, status: playerStatus })
+                    } else {
+                        newLobbyPlayers.push(player)
+                    }
+                })
+                return { ...state, LobbyPlayers: newLobbyPlayers }
+            } else {
+                return { ...state, LobbyPlayers: state.LobbyPlayers.concat([{ name: playerName, status: playerStatus }]) }
+            }
         }
     };
     return state;

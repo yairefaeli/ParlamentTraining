@@ -35,7 +35,6 @@ export class LobbyEffects {
         withLatestFrom(this.store.select(getPlayerName)),
         map(([result, playerName]) => {
             const players: any[] = result.data.getPlayers;
-            players.forEach(element => console.log(element));
 
             return new FetchLobbyPlayersSuccess(players.filter(player => player.name != playerName));
         })
@@ -55,7 +54,6 @@ export class LobbyEffects {
             });
         }),
         map((result) => {
-            console.log(result.data.updatePlayerStatus.player.status)
             return new UpdatePlayerStatusSuccess(
                 result.data.updatePlayerStatus.player.status as string
             );
@@ -66,13 +64,20 @@ export class LobbyEffects {
     subscribeToPlayerUpdates$: Observable<Action> = this.actions$.pipe(
         ofType<SubscribeToPlayerUpdates>(lobbyActionsTypes.SUBSCRIBING_PLAYER_UPDATES),
         switchMap(action => {
+            console.log(action.playerToken);
             return this.apolloLinkProvider.execute$({
                 query: subscribeToPlayerUpdates,
-
+                variables: {
+                    loginToken: action.playerToken
+                }
             })
         }),
         map((result) => {
-            return new PlayerUpdated(result.data.name, result.data.status)
+            console.log(result.data.playerStatusChanged)
+            return new PlayerUpdated(
+                result.data.playerStatusChanged.name,
+                result.data.playerStatusChanged.status
+            )
         })
     )
 

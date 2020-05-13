@@ -24,9 +24,7 @@ export class FetchLobbyPlayersSuccess implements Action {
 export class UpdatePlayerStatus implements Action {
     type = lobbyActionsTypes.UPDATE_PLAYER_STATUS;
 
-    constructor(public player: any) {
-        console.log(player)
-    }
+    constructor(public player: any) { }
 }
 
 export class UpdatePlayerStatusSuccess implements Action {
