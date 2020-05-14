@@ -1,5 +1,4 @@
 <mat-grid-list cols="2">
-
   <mat-grid-tile>
     <mat-card class="logged-user-card">
       <mat-card-title>
@@ -20,6 +19,7 @@
     <mat-card >
       <mat-card-header>
         <mat-card-title>Players</mat-card-title>
+        <h5 [ngClass]="((timer$ | async) !== '0')?'ready':'pending'">{{timer$ | async}}</h5>
       </mat-card-header>
 
       <mat-card class="player-card" *ngFor="let lobyPlayer of lobyPlayers$ | async">

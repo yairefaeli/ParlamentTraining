@@ -9,6 +9,8 @@ import { updatePlayerStatus } from 'src/app/graphql/mutations/update-player-stat
 import { fetchLobbyPlayers } from 'src/app/graphql/query/fetch-lobby-players.gql';
 
 import { subscribeToPlayerUpdates } from 'src/app/graphql/subscriptions/subscribe-to-player-updates.gql'
+import { subscribeToTimer } from 'src/app/graphql/subscriptions/subscribe-to-timer.qgl'
+
 import {
     lobbyActionsTypes,
     FetchLobbyPlayers,
@@ -16,7 +18,9 @@ import {
     UpdatePlayerStatus,
     UpdatePlayerStatusSuccess,
     SubscribeToPlayerUpdates,
-    PlayerUpdated
+    PlayerUpdated,
+    SubscribeToTimer,
+    TimerOn
 } from "../lobby.actions";
 import { getPlayerName } from "src/app/core/reducers/core.reducer";
 
@@ -64,7 +68,6 @@ export class LobbyEffects {
     subscribeToPlayerUpdates$: Observable<Action> = this.actions$.pipe(
         ofType<SubscribeToPlayerUpdates>(lobbyActionsTypes.SUBSCRIBING_PLAYER_UPDATES),
         switchMap(action => {
-            console.log(action.playerToken);
             return this.apolloLinkProvider.execute$({
                 query: subscribeToPlayerUpdates,
                 variables: {
@@ -73,11 +76,26 @@ export class LobbyEffects {
             })
         }),
         map((result) => {
-            console.log(result.data.playerStatusChanged)
             return new PlayerUpdated(
                 result.data.playerStatusChanged.name,
                 result.data.playerStatusChanged.status
             )
+        })
+    )
+
+    @Effect()
+    subscribeToTimer$: Observable<Action> = this.actions$.pipe(
+        ofType<SubscribeToTimer>(lobbyActionsTypes.SUBSCRIBING_TO_TIMER),
+        switchMap(action => {
+            return this.apolloLinkProvider.execute$({
+                query: subscribeToTimer,
+                variables: {
+                    playerToken: ""
+                }
+            })
+        }),
+        map((result) => {
+            return new TimerOn(result.data.subscribeToTimer);
         })
     )
 

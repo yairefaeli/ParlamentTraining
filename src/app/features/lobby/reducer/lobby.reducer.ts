@@ -1,16 +1,18 @@
 import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
-import { lobbyActionsTypes, FetchLobbyPlayersSuccess, UpdatePlayerStatusSuccess, SubscribeToPlayerUpdates, PlayerUpdated } from '../lobby.actions';
+import { lobbyActionsTypes, FetchLobbyPlayersSuccess, UpdatePlayerStatusSuccess, SubscribeToPlayerUpdates, PlayerUpdated, TimerOn } from '../lobby.actions';
 
 export const lobbyStateToken = 'lobby';
 
 export interface CoreState {
     LobbyPlayers: any[];
-    playerStatus: string
+    playerStatus: string;
+    timer: String;
 }
 
 export const coreInitialState: CoreState = {
     LobbyPlayers: undefined,
-    playerStatus: "PENDING"
+    playerStatus: "PENDING",
+    timer: "0"
 };
 
 export const LobbyReducer = (
@@ -48,6 +50,9 @@ export const LobbyReducer = (
                 return { ...state, LobbyPlayers: state.LobbyPlayers.concat([{ name: playerName, status: playerStatus }]) }
             }
         }
+        case lobbyActionsTypes.TIMER_ON: {
+            return { ...state, timer: (action as TimerOn).atSecond }
+        }
     };
     return state;
 }
@@ -65,4 +70,9 @@ export const getLobbyPlayers = createSelector(
 export const getPlayerStatus = createSelector(
     getLobbyState,
     (state: CoreState) => state.playerStatus
+)
+
+export const getTimer = createSelector(
+    getLobbyState,
+    (state: CoreState) => state.timer
 )
