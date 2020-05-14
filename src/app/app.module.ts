@@ -10,6 +10,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { LoginScreenModule } from './features/login-screen/login-screen.module';
 import { EffectsModule } from '@ngrx/effects';
 import { LobbyModule } from './features/lobby/lobby.module';
+import { GameModule } from './features/game/game.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LobbyModule } from './features/lobby/lobby.module';
     BrowserAnimationsModule,
     CoreModule,
     LoginScreenModule,
-    LobbyModule
+    LobbyModule,
+    GameModule
   ],
   providers: [],
   bootstrap: [AppComponent]

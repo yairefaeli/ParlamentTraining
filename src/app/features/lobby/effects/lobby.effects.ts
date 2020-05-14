@@ -23,6 +23,7 @@ import {
     TimerOn
 } from "../lobby.actions";
 import { getPlayerName } from "src/app/core/reducers/core.reducer";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class LobbyEffects {
@@ -95,6 +96,9 @@ export class LobbyEffects {
             })
         }),
         map((result) => {
+            if(result.data.subscribeToTimer == "5"){
+                this.router.navigate(['/game']);
+            }
             return new TimerOn(result.data.subscribeToTimer);
         })
     )
@@ -102,6 +106,7 @@ export class LobbyEffects {
     constructor(
         public actions$: Actions,
         public store: Store,
-        public apolloLinkProvider: ApolloLinkProviderService
+        public apolloLinkProvider: ApolloLinkProviderService,
+        public router: Router,
     ) { }
 }
