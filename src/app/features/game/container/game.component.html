@@ -1,1 +1,9 @@
-<ac-map [flyTo]="flyToOptions"></ac-map>
+<ac-map [flyTo]="flyToOptions">
+  <ac-layer acFor="let plane of plane$" [context]="this">
+    <ac-billboard-desc props="{
+      image: plane.image,
+      position:plane.position  
+    }">
+    </ac-billboard-desc>
+  </ac-layer>
+</ac-map>

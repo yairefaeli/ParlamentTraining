@@ -3,13 +3,13 @@
     <mat-card class="logged-user-card">
       <mat-card-title>
         <h4>
-          {{playerName$ | async}}
+          {{playerName}}
         </h4>
       </mat-card-title>
       <mat-card-content>
-        <h5 [ngClass]="((playerStatus$ | async) === 'READY')?'ready':'pending'">{{playerStatus$ | async}}</h5>
+        <h5 [ngClass]="(playerStatus === 'READY')?'ready':'pending'">{{playerStatus}}</h5>
       </mat-card-content>
-      <mat-card-actions *ngIf="(playerStatus$ | async) !== 'READY'">
+      <mat-card-actions *ngIf="playerStatus !== 'READY'">
         <button mat-raised-button color="primary" class="form-field" (click)="executeReady()">Toggle Ready</button>
       </mat-card-actions>
     </mat-card>
@@ -22,12 +22,12 @@
         <h5 [ngClass]="((timer$ | async) !== '0')?'ready':'pending'">{{timer$ | async}}</h5>
       </mat-card-header>
 
-      <mat-card class="player-card" *ngFor="let lobyPlayer of lobyPlayers$ | async">
+      <mat-card class="player-card" *ngFor="let lobyPlayer of lobyPlayers | keyvalue">
         <mat-card-title>
-          <h4>{{lobyPlayer.name}}</h4>
+          <h4>{{lobyPlayer.key}}</h4>
         </mat-card-title>
         <mat-card-title>
-          <h5 [ngClass]="(lobyPlayer.status === 'READY')?'ready':'pending'">{{lobyPlayer.status}}</h5>
+          <h5 [ngClass]="(lobyPlayer.value === 'READY')?'ready':'pending'">{{lobyPlayer.value}}</h5>
         </mat-card-title>
       </mat-card>
 

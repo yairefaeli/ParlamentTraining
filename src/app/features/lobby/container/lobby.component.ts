@@ -14,40 +14,24 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./lobby.component.less']
 })
 export class LobbyComponent implements OnInit {
-  playerName$ = this.store.select(getPlayerName);
-  playerStatus$ = this.store.select(getPlayerStatus);
-  lobyPlayers$ = this.store.select(getLobbyPlayers);
+  playerName: string;
+  playerStatus: string;
+  lobyPlayers: { [key: string]: string };
 
   timer$ = this.store.select(getTimer)
 
-  constructor(public store: Store<CoreState>) {
-    this.playerName$.subscribe(
-      (playerName) => {
-        this.store.dispatch(new SubscribeToPlayerUpdates(playerName));
-      })
+  constructor(public store: Store<CoreState>) { }
+
+  ngOnInit() {
+    this.store.select(getPlayerName).subscribe((value) => { this.playerName = value })
+    this.store.select(getPlayerStatus).subscribe((value) => { this.playerStatus = value })
+    this.store.select(getLobbyPlayers).subscribe((value) => { this.lobyPlayers = value })
+
+    this.store.dispatch(new SubscribeToPlayerUpdates(this.playerName));
     this.store.dispatch(new SubscribeToTimer());
   }
 
-  ngOnInit() {
-
-  }
-
   executeReady() {
-    this.playerName$.subscribe((nameValue) => {
-      this.store.dispatch(new UpdatePlayerStatus({ status: "READY", name: nameValue }))
-    });
-
-    // combineLatest(
-    //   this.playerName$,
-    //   this.playerStatus$
-    // ).pipe(
-    //   map(([nameValue, statusValue]) => {
-    //     return { status: statusValue, name: nameValue }
-    //   })
-    // ).subscribe(({ status: statusValue, name: nameValue }) =>
-    //   this.store.dispatch(new UpdatePlayerStatus({ status: "READY", name: nameValue }))
-    // )
-
+    this.store.dispatch(new UpdatePlayerStatus({ status: "READY", name: this.playerName }))
   }
-
 }
