@@ -1,0 +1,36 @@
+<mat-grid-list cols="2">
+  <mat-grid-tile>
+    <mat-card class="logged-user-card">
+      <mat-card-title>
+        <h4>
+          {{playerName$ | async}}
+        </h4>
+      </mat-card-title>
+      <mat-card-content>
+        <h5 [ngClass]="((playerStatus$ | async) === 'READY')?'ready':'pending'">{{playerStatus$ | async}}</h5>
+      </mat-card-content>
+      <mat-card-actions *ngIf="(playerStatus$ | async) !== 'READY'">
+        <button mat-raised-button color="primary" class="form-field" (click)="executeReady()">Toggle Ready</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile >
+    <mat-card >
+      <mat-card-header>
+        <mat-card-title>Players</mat-card-title>
+        <h5 [ngClass]="((timer$ | async) !== '0')?'ready':'pending'">{{timer$ | async}}</h5>
+      </mat-card-header>
+
+      <mat-card class="player-card" *ngFor="let lobyPlayer of lobyPlayers$ | async">
+        <mat-card-title>
+          <h4>{{lobyPlayer.name}}</h4>
+        </mat-card-title>
+        <mat-card-title>
+          <h5 [ngClass]="(lobyPlayer.status === 'READY')?'ready':'pending'">{{lobyPlayer.status}}</h5>
+        </mat-card-title>
+      </mat-card>
+
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
