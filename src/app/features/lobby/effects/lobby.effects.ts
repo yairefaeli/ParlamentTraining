@@ -39,9 +39,15 @@ export class LobbyEffects {
         }),
         withLatestFrom(this.store.select(getPlayerName)),
         map(([result, playerName]) => {
-            const players: any[] = result.data.getPlayers;
-
-            return new FetchLobbyPlayersSuccess(players.filter(player => player.name != playerName));
+            const players: { [key: string]: string } = {}
+            result.data.getPlayers.map(
+                player => {
+                    if (playerName !== player.name) {
+                        Object.assign(players, { [player.name]: player.status })
+                    }
+                });
+            console.log(players)
+            return new FetchLobbyPlayersSuccess(players);
         })
     )
 
@@ -96,7 +102,7 @@ export class LobbyEffects {
             })
         }),
         map((result) => {
-            if(result.data.subscribeToTimer == "5"){
+            if (result.data.subscribeToTimer == "5") {
                 this.router.navigate(['/game']);
             }
             return new TimerOn(result.data.subscribeToTimer);

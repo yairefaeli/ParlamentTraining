@@ -20,7 +20,7 @@ export class FetchLobbyPlayers implements Action {
 export class FetchLobbyPlayersSuccess implements Action {
     type = lobbyActionsTypes.FETCH_LOBBY_PLAYERS_SUCCESS;
 
-    constructor(public players: any[]) { }
+    constructor(public players: {[key: string]: string}) { }
 }
 
 export class UpdatePlayerStatus implements Action {

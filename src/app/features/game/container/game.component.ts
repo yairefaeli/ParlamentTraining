@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewerConfiguration } from 'angular-cesium';
+import { Observable, forkJoin, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -14,6 +15,7 @@ export class GameComponent implements OnInit {
     destination: Cesium.Cartesian3.fromRadians(0.6, 0.55, 690000)
   };
 
+  //planes$ = new Observable<AcNotification>; 
   constructor(private viewerConfig: ViewerConfiguration) {
     viewerConfig.viewerOptions = {
       imageryProvider: Cesium.createTileMapServiceImageryProvider({

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ExecuteLogin } from '../login-screen.actions';
 import { FetchLobbyPlayers } from '../../lobby/lobby.actions';
@@ -9,7 +9,6 @@ import { FetchLobbyPlayers } from '../../lobby/lobby.actions';
   styleUrls: ['./login-screen.component.less']
 })
 export class LoginScreenComponent implements OnInit {
-  playerName: string;
 
   constructor(public store: Store<any>) { }
 
@@ -17,12 +16,9 @@ export class LoginScreenComponent implements OnInit {
   
   }
 
+  @ViewChild('playerName')playerName: ElementRef
   executeLogin() {
-    this.store.dispatch(new ExecuteLogin(this.playerName))
+    this.store.dispatch(new ExecuteLogin(this.playerName.nativeElement.value))
     this.store.dispatch(new FetchLobbyPlayers());
-  }
-
-  onKey(event: any) {
-    this.playerName = event.target.value;
   }
 }
